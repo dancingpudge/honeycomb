@@ -262,22 +262,6 @@
   List parkingSpaceTypeVo = BeanCopierUtil.copyList(list, ParkingSpaceTypeVO.class);
 
 ````
-
-* 平台用户信息（UserInfo）传递
-
-  
-   ````Java
-    //1、从parrot项目中获取用户信息
-    GetAuthorityList.getUserInfo
-    // 2、通过feign调用时在RequestHeader中传递
-    @PostMapping("/raven/detector/pole")
-    StandardResultVO<Boolean> savePole(@RequestBody PoleSaveDTO poleSaveDTO, @RequestHeader UserInfo userInfo);
-    // 3、controller中新增参数接收
-    @ApiOperation("新增视频杆信息")
-    @PostMapping("/pole")
-    public Void savePole(@RequestBody PoleSaveDTO poleSaveDTO,@RequestHeader UserInfo userInfo)
-   ````
-
   
 
   
