@@ -1,0 +1,52 @@
+spring:
+  cloud:
+    nacos:
+      #注册中心
+      discovery:
+        server-addr: http://hoenycombdev.parking24.cn
+        namespace: local
+        username: hoenycomb-local
+        password: hoenycomb-local
+      #配置中心
+      config:
+        server-addr: http://hoenycombdev.parking24.cn
+        namespace: local
+        username: hoenycomb-local
+        password: hoenycomb-local
+
+  #mysql
+  datasource:
+    url: jdbc:mysql://192.168.10.102:3306/hcdemo?useSSL=false&autoReconnect=true&useCompression=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: LiuH
+    password: 123456
+
+  #mango
+  data:
+    mongodb:
+      #集群写法 spring.data.mongodb.uri=mongodb://user:secret@mongo1.example.com:12345,mongo2.example.com:23456/test
+      uri: mongodb://192.168.10.102:27017/hcdemo
+
+  redis:
+    enable: true
+    host: 192.168.10.102
+    database: 0
+    port: 6379
+    password: 123456
+
+  ###########【Kafka集群】###########
+  kafka:
+    bootstrap-servers: 192.168.10.102:9092
+    ###########【初始化生产者配置】###########
+    # 重试次数
+    producer:
+      # 是否开启
+      enable: true
+      # 发送的topic
+      topic-name: demo
+    # 默认的消费组ID
+    consumer:
+      enable: true
+      # 消费者topic,可逗号分隔
+      topic-name: demo
+      properties:
+        group.id: demoConsumerGroup

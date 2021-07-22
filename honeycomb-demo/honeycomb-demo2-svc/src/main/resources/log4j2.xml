@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<!-- 	<PatternLayout pattern="[%RequestId] %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/> -->
+    <!--全局参数-->
+    <Properties> 
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n</Property>
+        <Property name="logDir">./logs</Property>
+    </Properties>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="console"/>
+            <!--部署的时候debug不用开启-->
+            <!--<AppenderRef ref="debug_file"/>-->
+            <AppenderRef ref="info_file"/>
+            <AppenderRef ref="error_file"/>
+        </Root>
+    </Loggers>
+
+    <Appenders>
+        <!-- 定义输出到控制台 -->
+        <Console name="console" target="SYSTEM_OUT" follow="true">
+            <!--控制台只输出level及以上级别的信息-->
+            <!--ERROR、WARN、INFO、DEBUG-->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT"/>
+            <!-- <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout> -->
+            <PatternLayout pattern="[%RequestId] %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!--debug级别日志 按天存储文件 最多存7天-->
+        <RollingFile name="debug_file"
+                     fileName="${logDir}/debugLogs/monitor_debug.log"
+                     filePattern="${logDir}/debugLogs/monitor_debug_%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+           <!--  <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout> -->
+            <PatternLayout pattern="[%RequestId] %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logDir}/debugLogs" maxDepth="1">
+                    <IfFileName glob="*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!--info级别日志 500M一个 最多10个-->
+        <RollingFile name="info_file"
+                     fileName="${logDir}/infoLogs/monitor_info.log"
+                     filePattern="${logDir}/infoLogs/monitor_info_%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+
+        <!--error级别日志 500M一个 最多10个-->
+        <RollingFile name="error_file"
+                     fileName="${logDir}/errorLogs/monitor_error.log"
+                     filePattern="${logDir}/errorLogs/monitor_error_%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+           <!--  <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout> -->
+            <PatternLayout pattern="[%RequestId] %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+    </Appenders>
+</Configuration>

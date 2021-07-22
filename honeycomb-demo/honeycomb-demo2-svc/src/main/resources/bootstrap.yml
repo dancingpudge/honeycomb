@@ -1,0 +1,63 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /honeycomb-demo2/
+
+spring:
+  application:
+    name: honeycomb-demo2
+  profiles:
+    active: @environment@
+
+  cloud:
+    nacos:
+      #注册中心
+      discovery:
+        group: demo
+      #配置中心
+      config:
+        group: demo
+        #指定yaml格式的配置
+        file-extension: yaml
+
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    platform: mysql
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      initialSize: 1
+      maxActive: 100
+      minIdle: 1
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 6000000
+      minEvictableIdleTimeMillis: 300000
+      MaxEvictableIdleTimeMillis: 6000000
+      validationQuery: SELECT 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat
+
+ribbon:
+  #是否集成Ribbon
+  nacos.enabled: true
+  # 等待请求响应的超时时间. 单位：ms
+  ReadTimeout: 5000
+  # 连接超时时间. 单位：ms
+  ConnectTimeout: 1000
+  # 是否对所有请求进行失败重试, 设置为 false, 让feign只针对Get请求进行重试.
+  OkToRetryOnAllOperations: true
+  # 同一个服务实例的重试次数 (excluding the first try)
+  MaxAutoRetries: 1
+  # 不同服务实例的重试次数(excluding the first server)
+  MaxAutoRetriesNextServer: 1
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:mapping/*Mapper.xml
+# 关闭mybatis-plus的banner打印
+  global-config:
+    banner: false

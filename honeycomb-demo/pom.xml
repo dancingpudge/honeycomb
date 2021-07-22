@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.pudge.honeycomb</groupId>
+        <artifactId>honeycomb</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.pudge.honeycomb</groupId>
+    <artifactId>honeycomb-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <description>demo模块项目组</description>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <!--jar包形式提供给其他服务-->
+        <module>honeycomb-demo-api</module>
+        <!--独立部署的微服务-->
+        <module>honeycomb-demo-svc</module>
+        <!--微服务授权认证,使用honeycomb-demo-client-->
+        <module>honeycomb-demo-portal</module>
+        <!--jar包形式提供给其他服务-->
+        <module>honeycomb-demo2-api</module>
+        <!--独立部署的微服务-->
+        <module>honeycomb-demo2-svc</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!--分别设置开发，测试，生产环境-->
+    <profiles>
+        <!-- 本地环境 -->
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment>local</environment>
+            </properties>
+        </profile>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <environment>dev</environment>
+            </properties>
+        </profile>
+    </profiles>
+</project>

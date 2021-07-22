@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honeycomb.demo2.entity.dto.DemoAccountMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.honeycomb.demo2.entity.po.DemoAccount">
+        <id column="account_id" property="accountId" />
+        <result column="account_code" property="accountCode" />
+        <result column="union_id" property="unionId" />
+        <result column="user_name" property="userName" />
+        <result column="account_status" property="accountStatus" />
+        <result column="terminal" property="terminal" />
+        <result column="is_recharge" property="isRecharge" />
+        <result column="unconscious_status" property="unconsciousStatus" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="active_time" property="activeTime" />
+        <result column="is_delete" property="isDelete" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        account_id, account_code, union_id, user_name, account_status, terminal, is_recharge, unconscious_status, create_time, update_time, active_time, is_delete
+    </sql>
+    <select id="getPage" resultType="com.honeycomb.demo2.entity.vo.DemoAccountVO">
+        select * from demo_account
+    </select>
+
+</mapper>
